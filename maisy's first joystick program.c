@@ -1,4 +1,5 @@
 #pragma config(Hubs,  S1, HTMotor,  none,     none,     none)
+#pragma config(Sensor, S1,     ,               sensorI2CMuxController)
 #pragma config(Sensor, S2,     _4ks2limit,     sensorTouch)
 #pragma config(Sensor, S3,     _4ks3limit,     sensorTouch)
 #pragma config(Motor,  mtr_S1_C1_1,     motorD,        tmotorTetrix, openLoop)
@@ -11,26 +12,25 @@
 task main()
 {
 
-	int speed;
+	int speed1, speed2;
 
-	speed=100;
-
-
-
-TJoystick joystick;
+//	TJoystick joystick;
 
 	while(true)
 	{
 
- getJoystickSettings(joystick);
+ 		getJoystickSettings(joystick);
 
-    motor[motorD] = joystick.joy1_y1;
-    motor[motorE] = joystick.joy1_x1;
+    speed1 = joystick.joy1_y1;
+    speed2 = -joystick.joy1_x1;
 
 		if(SensorValue(_4ks2limit) == 1)
-		{motor[motorD] =0;
-	 		motor[motorE] =0;
+		{
+			speed1 =0;
+	 		speed2 =0;
 		}
+		motor[motorD] = speed1;
+		motor[motorE] = speed2;
 	}
 }
 
