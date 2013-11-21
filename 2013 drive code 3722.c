@@ -35,14 +35,14 @@
 
 // #defines for magical values
 #define DIVISOR        1.28
-#define DIVISOR_LIFT 5.12
-#define MARGIN        4
+#define DIVISOR_LIFT 	 5.12
+#define MARGIN         4
 
 // Defines an expression to bitmask for the arcade and tank buttons
 // button 5
 #define ARCADE        (joystick.joy1_Buttons & 0b00010000)
 // button 6
-#define TANK                (joystick.joy1_Buttons & 0b00100000)
+#define TANK          (joystick.joy1_Buttons & 0b00100000)
 
 //Keep the value a between b and c
 #define CONSTRAIN(a, b, c) ( ((a)<(b)) ? (b) : ( ((a)>(c)) ? (c) : (a)) )
@@ -77,7 +77,7 @@ void initializeRobot()
         motor[leftBack] = 0;
         motor[leftFront] = 0;
 
-  return;
+  			return;
 }
 
 
@@ -143,10 +143,9 @@ void arm()
         //nxtDisplayCenteredTextLine(2, s);
 
         armDown = (bool) SensorValue[touch];
-        if (armDown  && (y  > 0 ) )
+        if (armDown && (y  > 0 ) )
         {
                 y = 0;
-
         }
 
         armUp = (bool) SensorValue[touchUp];
@@ -161,7 +160,7 @@ void arm()
         motor[liftMotor2] = -y;
         sprintf(s, "IR: %d", SensorValue[touch]);
         nxtDisplayCenteredTextLine(2, s);
-return;
+				return;
 }
 
 void infra ()
