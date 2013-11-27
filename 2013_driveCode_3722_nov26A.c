@@ -134,34 +134,34 @@ void arm()
 	float y = (float) (joystick.joy2_y1) / DIVISOR_LIFT;
 
 	if ( y > 0 )
-{
+		{
 
-	if (nMotorEncoder[liftMotor1] > MAXARM)
-	{
-		y = 0;
-	}//maxarm
-		motor[liftMotor1] = y;
-}// y>0
+		if (nMotorEncoder[liftMotor1] > MAXARM)
+			{
+			y = 0;
+			}//maxarm
+		}// y>0
+	
 	if (y < 0 )
 	{
 		if (nMotorEncoder[liftMotor1] < MINARM)
 		{
-			y = 0;
+		y = 0;
 		}//minarm
-		motor[liftMotor1] = y;
 	}//y<0
+	motor[liftMotor1] = y;
 }//arm
 void sirvo ()
 {
 	getJoystickSettings(joystick);
 	if (OPEN)
-	{
+		{
 		servo[servo1]  = 255;
-	}
+		}
 	if (CLOSE)
-	{
+		{
 		servo[servo1] = 0;
-	}
+		}
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
