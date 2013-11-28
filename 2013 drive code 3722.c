@@ -3,9 +3,6 @@
 #pragma config(Sensor, S2, touch, sensorTouch)
 #pragma config(Sensor, S3, infared, sensorHiTechnicIRSeeker1200)
 #pragma config(Sensor, S4, touchUp, sensorTouch)
-#pragma config(Motor, motorA, , tmotorNXT, openLoop)
-#pragma config(Motor, motorB, , tmotorNXT, openLoop)
-#pragma config(Motor, motorC, , tmotorNXT, openLoop)
 #pragma config(Motor, mtr_S1_C1_1, leftBack, tmotorTetrix, openLoop)
 #pragma config(Motor, mtr_S1_C1_2, leftFront, tmotorTetrix, openLoop)
 #pragma config(Motor, mtr_S1_C2_1, rightBack, tmotorTetrix, openLoop)
@@ -32,24 +29,24 @@
 #define DIVISOR_LIFT 5.12
 #define MARGIN        4
 
-// this is for defining an expression to bitmask for the arcade and tank buttons
-// button 5
+// #defines an expression to bitmask for the arcade and tank buttons
+// button 5, joy 1
 #define ARCADE        (joystick.joy1_Buttons & 0b00010000)
-// button 6
+// button 6, joy 1
 #define TANK                (joystick.joy1_Buttons & 0b00100000)
-
+// button 5, joy 2
 #define OPEN (joystick.joy2_Buttons & 0b00010000)
-
+// button 6, joy 2
 #define CLOSE (joystick.joy2_Buttons & 0b00100000)
 
-//Keep the value a between b and c
+// keeps the value a between b and c
 #define CONSTRAIN(a, b, c) ( ((a)<(b)) ? (b) : ( ((a)>(c)) ? (c) : (a)) )
 
 #define MAXARM 300
 
 #define MINARM 10
 
-//Variable to track arcade and tank modes
+// variable to track arcade and tank modes
 bool tank = true;
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -79,9 +76,9 @@ void initializeRobot()
 
 void drive()
 {
-        // this is to retrieve joystick values
+        // retrieves joystick values
         getJoystickSettings(joystick);
-        // these switch between arcade and tank mode
+        // switches between arcade and tank
         if (ARCADE)
         {
                 tank = false;
@@ -90,13 +87,13 @@ void drive()
         {
                 tank = true;
         }
-        // this is tank setting
+        // tank driving
         if (tank)
         {
-                // translating joystick values from 128 to -127 to motor speeds
+                // translates joystick values from 128 to -127 to motor speeds
                 float y1 = (float)(joystick.joy1_y1) / DIVISOR;
                 float y2 = -(float)(joystick.joy1_y2) / DIVISOR;
-                // wheels will be stopped when desired
+                // wheels are still when desired
                 y1 = (abs(y1) - MARGIN < MARGIN) ? 0 : y1;
                 y2 = (abs(y2) - MARGIN < MARGIN) ? 0 : y2;
                 // sets motors
@@ -105,18 +102,18 @@ void drive()
                 motor[rightBack] = y2;
                 motor[rightFront] = y2;
         }
-        // this is arcade mode
+        // arcade mode
         else
         {
-                //translating joystick values to motor speeds
+                //translates joystick values to motor speeds
                 float y = (float)(joystick.joy1_y2) / DIVISOR;
                 float x = (float)(joystick.joy1_x2) / DIVISOR;
                 // wheels are still when desired
                 y = (abs(y) - MARGIN < MARGIN) ? 0 : y;
                 x = (abs(x) - MARGIN < MARGIN) ? 0 : x;
-                // calculating arcade values
-                float left = CONSTRAIN(y + x, -128/DIVISOR, 128/DIVISOR);
-                float right = -CONSTRAIN(y - x, -128/DIVISOR, 128/DIVISOR);
+                // calculates arcade values
+                float left = CONSTRAIN(y + x, -128 / DIVISOR, 128 / DIVISOR);
+                float right = -CONSTRAIN(y - x, -128 / DIVISOR, 128 / DIVISOR);
                 // sets motors
                 motor[leftBack] = left;
                 motor[leftFront] = left;
@@ -125,7 +122,8 @@ void drive()
         }
 
 }
-        //for the arm
+
+//for the arm
 void arm()
 {
         // retrieves joystick settings
@@ -138,7 +136,7 @@ void arm()
 
                 if (nMotorEncoder[liftMotor1] > MAXARM)
                         {
-                        y = 0;
+                        y = MAXARM;
                         }//maxarm
                 }// y>0
         
@@ -146,7 +144,7 @@ void arm()
         {
                 if (nMotorEncoder[liftMotor1] < MINARM)
                 {
-                y = 0;
+                y = MINARM;
                 }//minarm
         }//y<0
         motor[liftMotor1] = y;
