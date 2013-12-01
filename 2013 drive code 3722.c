@@ -30,7 +30,7 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////
 
 #include "JoystickDriver.c" //Include file to "handle" the Bluetooth messages.
-8
+
 // #defines for magical values
 #define DIVISOR        1.28 //=((1/1)128)/100 = 1/1 power
 #define DIVISOR_LIFT 1.28 //=((1/1)128)/100 = 1/1 power
